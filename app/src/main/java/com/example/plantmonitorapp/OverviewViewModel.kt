@@ -27,7 +27,10 @@ class OverviewViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _plants.value = PlantWatchApi.retrofitService.getPlants()
-            } catch (e: Exception) {}
+            } catch (e: Exception)
+            {
+                _plants.value = listOf()
+            }
         }
     }
 }
