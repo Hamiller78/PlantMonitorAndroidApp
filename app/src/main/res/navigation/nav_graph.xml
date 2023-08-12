@@ -15,9 +15,9 @@
     </fragment>
     <fragment
             android:id="@+id/SecondFragment"
-            android:name="com.example.plantmonitorapp.SecondFragment"
+            android:name="com.example.plantmonitorapp.DetailFragment"
             android:label="@string/second_fragment_label"
-            tools:layout="@layout/fragment_second">
+            tools:layout="@layout/fragment_details">
         <action
                 android:id="@+id/action_SecondFragment_to_OverviewFragment"
                 app:destination="@id/overviewFragment"/>

@@ -6,39 +6,40 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.plantmonitorapp.databinding.ItemViewBinding
+import com.example.plantmonitorapp.network.PlantModel
 
 /**
  * Adapter for the [RecyclerView] in [MainActivity]
  */
-class OverviewAdapter :
-    RecyclerView.Adapter<OverviewAdapter.OverviewViewHolder>() {
+class OverviewAdapter : ListAdapter<PlantModel,
+        OverviewAdapter.OverviewViewHolder>(DiffCallback) {
 
-        // private val list = ('A').rangeTo('C').toList()
-        private val list = listOf(
-            Item("Title 1", "Description 1", "https://www.google.com/something"),
-            Item("Title 2", "Description 2", "https://www.google.com/something"),
-            Item("Title 3", "Description 3", "https://www.google.com/something")
-            // Add more items as needed
-        )
+    companion object DiffCallback : DiffUtil.ItemCallback<PlantModel>() {
+        override fun areItemsTheSame(oldItem: PlantModel, newItem: PlantModel): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    class OverviewViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val button = view.findViewById<Button>(R.id.button_item)
-        val text = view.findViewById<TextView>(R.id.text_item)
+        override fun areContentsTheSame(oldItem: PlantModel, newItem: PlantModel): Boolean {
+            // TODO: Take other properties into account
+            return oldItem.name == newItem.name
+        }
     }
 
-    override fun getItemCount(): Int {
-        return list.size
+    class OverviewViewHolder(private var binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(PlantModel: PlantModel) {
+            binding.plant = PlantModel
+            binding.executePendingBindings()
+        }
     }
 
-    /**
-     * Creates new views with R.layout.item_view as its template
-     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OverviewViewHolder {
-        val layout = LayoutInflater
-            .from(parent.context)
-            .inflate(R.layout.item_view, parent, false)
-
+        val layout = ItemViewBinding.inflate(
+            LayoutInflater.from(parent.context)
+        )
         return OverviewViewHolder(layout)
     }
 
@@ -46,18 +47,17 @@ class OverviewAdapter :
      * Replaces the content of an existing view with new data
      */
     override fun onBindViewHolder(holder: OverviewViewHolder, position: Int) {
-        val item = list.get(position)
-        holder.button.text = item.name
-        holder.text.text = item.description
+        val item = getItem(position)
+        holder.bind(item)
 
-        // Assigns a [OnClickListener] to the button contained in the [ViewHolder]
-        holder.button.setOnClickListener {
-            // Create an action from WordList to DetailList
-            // using the required arguments
-            val action =  OverviewFragmentDirections.actionOverviewFragmentToSecondFragment()
-            // Navigate using that action
-            holder.view.findNavController().navigate(action)
-        }
+//        // Assigns a [OnClickListener] to the button contained in the [ViewHolder]
+//        holder.button.setOnClickListener {
+//            // Create an action from WordList to DetailList
+//            // using the required arguments
+//            val action =  OverviewFragmentDirections.actionOverviewFragmentToSecondFragment()
+//            // Navigate using that action
+//            holder.view.findNavController().navigate(action)
+//        }
     }
 
 }
