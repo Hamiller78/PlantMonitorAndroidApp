@@ -14,7 +14,13 @@ import androidx.recyclerview.widget.RecyclerView
 class OverviewAdapter :
     RecyclerView.Adapter<OverviewAdapter.OverviewViewHolder>() {
 
-        private val list = ('A').rangeTo('C').toList()
+        // private val list = ('A').rangeTo('C').toList()
+        private val list = listOf(
+            Item("Title 1", "Description 1", "https://www.google.com/something"),
+            Item("Title 2", "Description 2", "https://www.google.com/something"),
+            Item("Title 3", "Description 3", "https://www.google.com/something")
+            // Add more items as needed
+        )
 
     class OverviewViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val button = view.findViewById<Button>(R.id.button_item)
@@ -41,8 +47,8 @@ class OverviewAdapter :
      */
     override fun onBindViewHolder(holder: OverviewViewHolder, position: Int) {
         val item = list.get(position)
-        holder.button.text = item.toString()
-        holder.text.text = "Plant " + item.toString()
+        holder.button.text = item.name
+        holder.text.text = item.description
 
         // Assigns a [OnClickListener] to the button contained in the [ViewHolder]
         holder.button.setOnClickListener {
