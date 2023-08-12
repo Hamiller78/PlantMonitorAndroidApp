@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
@@ -16,7 +17,8 @@ class OverviewAdapter :
         private val list = ('A').rangeTo('C').toList()
 
     class OverviewViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val button = view.findViewById<Button>(R.id.button_first)
+        val button = view.findViewById<Button>(R.id.button_item)
+        val text = view.findViewById<TextView>(R.id.text_item)
     }
 
     override fun getItemCount(): Int {
@@ -40,6 +42,7 @@ class OverviewAdapter :
     override fun onBindViewHolder(holder: OverviewViewHolder, position: Int) {
         val item = list.get(position)
         holder.button.text = item.toString()
+        holder.text.text = "Plant " + item.toString()
 
         // Assigns a [OnClickListener] to the button contained in the [ViewHolder]
         holder.button.setOnClickListener {
