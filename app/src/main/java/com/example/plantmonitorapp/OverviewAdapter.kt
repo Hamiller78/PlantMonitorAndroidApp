@@ -36,10 +36,8 @@ class OverviewAdapter : ListAdapter<PlantModel,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OverviewViewHolder {
-        val layout = ItemViewBinding.inflate(
-            LayoutInflater.from(parent.context)
-        )
-        return OverviewViewHolder(layout)
+        val binding = ItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return OverviewViewHolder(binding)
     }
 
     /**

@@ -9,5 +9,5 @@ fun bindRecyclerView(recyclerView: RecyclerView,
                      data: List<PlantModel>?) {
     val adapter = recyclerView.adapter as OverviewAdapter
     adapter.submitList(data)
-
 }
+

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +24,8 @@ class OverviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding = FragmentOverviewBinding.inflate(inflater)
+        //val binding = FragmentOverviewBinding.inflate(inflater)
+        val binding = DataBindingUtil.inflate(inflater, R.layout.fragment_overview, container, false) as FragmentOverviewBinding
         binding.lifecycleOwner = this
 
         binding.viewModel = viewModel

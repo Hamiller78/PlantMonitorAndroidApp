@@ -8,8 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.plantmonitorapp.network.PlantModel
 import com.example.plantmonitorapp.network.PlantWatchApi
 import com.example.plantmonitorapp.network.SensorModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.internal.notify
 import okhttp3.internal.notifyAll
 
@@ -35,9 +37,10 @@ class OverviewViewModel : ViewModel() {
                 _plants.value = PlantWatchApi.retrofitService.getPlants()
                 _sensors.value = PlantWatchApi.retrofitService.getSensors()
                 updateSensorsRefsInPlants()
-                for (i in 1..10) {
-                    pollSensors()
-                    delay(5000L)
+                while (true) {
+                    var plantList = pollSensors()
+                    _plants.postValue(plantList)
+                    delay(1000L)
                 }
             } catch (e: Exception) {
                 _plants.value = listOf()
@@ -58,17 +61,21 @@ class OverviewViewModel : ViewModel() {
         }
     }
 
-    private suspend fun pollSensors() {
-        for (plant in _plants.value!!) {
+    private suspend fun pollSensors() : List<PlantModel> {
+        val plantList = mutableListOf<PlantModel>()
+        for (plant in _plants?.value ?: emptyList()) {
             try {
+                val newPlant = plant.copy()
                 val sensorValue = PlantWatchApi.retrofitService.getSensorValue(plant.sensorModel!!.serviceUri)
                 if (sensorValue.isSuccessful) {
                     val sensorNumber = sensorValue.body()!!.toFloat()
-                    plant.sensorValue = String.format("%.3f", sensorNumber)
+                    newPlant.sensorValue = String.format("%.3f", sensorNumber)
                 }
+                plantList += newPlant
             } catch (e: Exception) {
                 Log.e("OverviewViewModel", "Error polling sensor data", e)
             }
         }
+        return plantList
     }
 }
