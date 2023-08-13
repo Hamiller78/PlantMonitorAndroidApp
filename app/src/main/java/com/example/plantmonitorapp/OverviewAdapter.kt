@@ -24,14 +24,13 @@ class OverviewAdapter : ListAdapter<PlantModel,
         }
 
         override fun areContentsTheSame(oldItem: PlantModel, newItem: PlantModel): Boolean {
-            // TODO: Take other properties into account
-            return oldItem.name == newItem.name
+            return oldItem == newItem
         }
     }
 
     class OverviewViewHolder(private var binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(PlantModel: PlantModel) {
-            binding.plant = PlantModel
+        fun bind(plantModel: PlantModel) {
+            binding.plant = plantModel
             binding.executePendingBindings()
         }
     }

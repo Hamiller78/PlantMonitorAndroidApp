@@ -18,7 +18,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:padding="8dp" />
+            android:padding="8dp"
+            android:text="@{plant.name}"
+            />
 
         <TextView
             android:id="@+id/text_item"
@@ -27,8 +29,18 @@
             android:layout_weight="1"
             android:layout_margin="4dp"
             android:padding="8dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@{plant.description}" />
+
+        <TextView
+            android:id="@+id/sensor_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:padding="8dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@{plant.name}"         />
+            android:text="@{plant.sensorValue}" />
 
     </LinearLayout>
 </layout>

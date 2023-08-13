@@ -3,9 +3,11 @@ package com.example.plantmonitorapp.network
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Url
 
 private const val BASE_URL =
     "https://plantmonitorwebappserver20220208190443.azurewebsites.net/"
@@ -31,6 +33,12 @@ private val retrofit = Retrofit.Builder()
 interface PlantWatchApiService {
     @GET("Plants/GetList")
     suspend fun getPlants(): List<PlantModel>
+
+    @GET("Sensors/GetList")
+    suspend fun getSensors(): List<SensorModel>
+
+    @GET
+    suspend fun getSensorValue(@Url url: String): Response<String>
 }
 
 object PlantWatchApi {
